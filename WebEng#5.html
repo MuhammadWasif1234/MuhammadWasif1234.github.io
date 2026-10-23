@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<!-- lang attribute below lets screen readers pick the right pronunciation -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="BrightPath Web Studio - modern, accessible websites for small businesses.">
+  <title>BrightPath Web Studio | Modern Websites for Small Businesses</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* ============ 1. BASE / DESIGN TOKENS ============ */
+    :root {
+      --primary: #1d4ed8;
+      --primary-dark: #1e3a8a;
+      --accent: #f59e0b;
+      --accent-dark: #d97706;
+      --dark: #0f172a;
+      --text: #1f2937;
+      --muted: #64748b;
+      --light: #f1f5f9;
+      --white: #ffffff;
+      --radius: 14px;
+      --shadow: 0 8px 24px rgba(15, 23, 42, 0.10);
+      --max: 1100px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', Arial, Helvetica, sans-serif;
+      color: var(--text);
+      line-height: 1.7;
+      background: var(--white);
+    }
+
+    img { max-width: 100%; display: block; }
+    a { color: var(--primary); }
+
+    .container { max-width: var(--max); margin: 0 auto; padding: 0 20px; }
+
+    /* Visible keyboard focus for accessibility */
+    :focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+
+    /* Skip link: first thing keyboard users can jump with */
+    .skip-link {
+      position: absolute; left: -999px; top: 0;
+      background: var(--accent); color: var(--dark);
+      padding: 10px 16px; font-weight: 600; z-index: 200;
+    }
+    .skip-link:focus { left: 10px; top: 10px; }
+
+    /* ============ 2. HEADER + NAVIGATION ============ */
+    header {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--dark);
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .header-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      min-height: 68px;
+    }
+
+    .logo {
+      font-size: 22px; font-weight: 800; color: var(--white);
+      text-decoration: none; letter-spacing: 0.3px;
+    }
+    .logo span { color: var(--accent); }
+
+    nav ul {
+      list-style: none; margin: 0; padding: 0;
+      display: flex; gap: 6px;           /* spacing between links */
+    }
+
+    nav a {
+      display: block; padding: 10px 16px; border-radius: 8px;
+      color: #e2e8f0; text-decoration: none; font-weight: 500; font-size: 15px;
+      transition: background 0.2s, color 0.2s;
+    }
+    nav a:hover { background: var(--accent); color: var(--dark); }   /* hover colour */
+
+    /* Current page / section highlight */
+    nav a[aria-current="page"] {
+      background: var(--primary); color: var(--white);
+    }
+
+    .menu-toggle {
+      display: none; background: none; border: 2px solid #475569;
+      color: var(--white); font-size: 22px; line-height: 1;
+      padding: 6px 12px; border-radius: 8px; cursor: pointer;
+    }
+
+    /* ============ 3. HERO ============ */
+    .hero {
+      position: relative; width: 100%;
+      min-height: 88vh; display: flex; align-items: center;
+      color: var(--white); text-align: center;
+      /* Photo with gradient fallback if the image cannot load */
+      background:
+        linear-gradient(135deg, #1e3a8a, #0f172a),
+        url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1600&q=70') center / cover no-repeat;
+      background-image:
+        url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1600&q=70'),
+        linear-gradient(135deg, #1e3a8a, #0f172a);
+      background-size: cover; background-position: center;
+    }
+
+    /* Dark overlay keeps white text readable over any photo */
+    .hero::before {
+      content: ""; position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(15,23,42,0.80), rgba(15,23,42,0.60));
+    }
+
+    .hero-content { position: relative; max-width: 780px; margin: 0 auto; padding: 60px 20px; }
+
+    .hero .eyebrow {
+      display: inline-block; margin-bottom: 14px; padding: 4px 16px;
+      background: rgba(245, 158, 11, 0.18); color: var(--accent);
+      border: 1px solid var(--accent); border-radius: 999px;
+      font-size: 14px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;
+    }
+
+    .hero h1 {
+      font-size: clamp(34px, 6vw, 62px);   /* large, responsive headline */
+      line-height: 1.15; font-weight: 800; margin: 0 0 18px;
+    }
+    .hero h1 em { font-style: normal; color: var(--accent); }
+
+    .hero p { font-size: clamp(16px, 2.2vw, 20px); color: #e2e8f0; margin: 0 auto 32px; max-width: 620px; }
+
+    .btn {
+      display: inline-block; padding: 15px 38px; border-radius: 999px;
+      background: var(--accent); color: var(--dark);       /* high-contrast amber button */
+      font-size: 17px; font-weight: 700; text-decoration: none;
+      box-shadow: 0 8px 20px rgba(245, 158, 11, 0.4);
+      transition: transform 0.2s, background 0.2s, box-shadow 0.2s;
+    }
+    .btn:hover { background: var(--accent-dark); transform: translateY(-3px); box-shadow: 0 12px 26px rgba(245,158,11,0.5); }
+
+    /* ============ 4. CONTENT SECTIONS ============ */
+    section { padding: 80px 0; }
+    section.alt { background: var(--light); }
+
+    .section-head { text-align: center; max-width: 640px; margin: 0 auto 50px; }
+    .section-head h2 { font-size: clamp(28px, 4vw, 38px); margin: 0 0 10px; color: var(--dark); }
+    .section-head p { margin: 0; color: var(--muted); }
+    .section-head::after {
+      content: ""; display: block; width: 60px; height: 4px; margin: 16px auto 0;
+      background: var(--accent); border-radius: 4px;
+    }
+
+    /* About: two columns */
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
+    .about-grid img { border-radius: var(--radius); box-shadow: var(--shadow); width: 100%; }
+    .about-grid h3 { font-size: 24px; margin: 0 0 12px; color: var(--dark); }
+    .about-grid ul { padding-left: 20px; margin: 16px 0 0; }
+    .about-grid li { margin-bottom: 6px; }
+
+    .stats { display: flex; gap: 30px; margin-top: 24px; }
+    .stat strong { display: block; font-size: 30px; color: var(--primary); line-height: 1.1; }
+    .stat span { font-size: 14px; color: var(--muted); }
+
+    /* Services: three cards */
+    .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+
+    .card {
+      background: var(--white); padding: 34px 28px; border-radius: var(--radius);
+      box-shadow: var(--shadow); border-top: 5px solid var(--primary);
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .card:hover { transform: translateY(-8px); box-shadow: 0 16px 34px rgba(15,23,42,0.16); }
+
+    .card .icon {
+      width: 56px; height: 56px; border-radius: 14px; margin-bottom: 18px;
+      display: flex; align-items: center; justify-content: center;
+      background: #dbeafe; font-size: 28px;
+    }
+    .card h3 { margin: 0 0 8px; font-size: 20px; color: var(--dark); }
+    .card p { margin: 0 0 14px; color: var(--muted); font-size: 15px; }
+    .card a { font-weight: 600; text-decoration: none; }
+    .card a:hover { text-decoration: underline; }
+
+    /* Fade-in on scroll (JS adds .visible) */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s, transform 0.7s; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ============ 5. FOOTER ============ */
+    footer { background: var(--dark); color: #cbd5e1; padding: 60px 0 0; }
+
+    .footer-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 40px; }
+    footer h2 { color: var(--white); font-size: 18px; margin: 0 0 14px; }
+    footer p { margin: 0 0 8px; font-size: 15px; }
+    footer a { color: #cbd5e1; text-decoration: none; }
+    footer a:hover { color: var(--accent); text-decoration: underline; }
+
+    .social { display: flex; gap: 12px; list-style: none; padding: 0; margin: 0; }
+    .social a {
+      display: flex; align-items: center; justify-content: center;
+      width: 42px; height: 42px; border-radius: 50%;
+      background: #1e293b; color: var(--white); font-weight: 700; font-size: 15px;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .social a:hover { background: var(--accent); color: var(--dark); transform: translateY(-3px); text-decoration: none; }
+
+    .copyright {
+      margin-top: 44px; padding: 20px 0; text-align: center;
+      border-top: 1px solid #1e293b; font-size: 14px; color: #94a3b8;
+    }
+
+    /* Back to top button (JS toggles .show) */
+    #toTop {
+      position: fixed; right: 20px; bottom: 20px; width: 46px; height: 46px;
+      border: none; border-radius: 50%; cursor: pointer;
+      background: var(--primary); color: var(--white); font-size: 20px;
+      box-shadow: var(--shadow); opacity: 0; visibility: hidden; transition: opacity 0.3s;
+    }
+    #toTop.show { opacity: 1; visibility: visible; }
+
+    /* ============ RESPONSIVE ============ */
+    @media (max-width: 860px) {
+      .cards { grid-template-columns: 1fr; }
+      .about-grid { grid-template-columns: 1fr; gap: 30px; }
+      .footer-grid { grid-template-columns: 1fr; }
+      section { padding: 60px 0; }
+
+      .menu-toggle { display: block; }
+      nav { position: absolute; top: 100%; left: 0; right: 0; background: var(--dark); display: none; padding: 10px 20px 20px; }
+      nav.open { display: block; }
+      nav ul { flex-direction: column; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; scroll-behavior: auto !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <!-- ========== HEADER ========== -->
+  <header>
+    <div class="container header-inner">
+      <a class="logo" href="#home" aria-label="BrightPath Web Studio - home">Bright<span>Path</span></a>
+
+      <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="siteNav" aria-label="Toggle navigation menu">&#9776;</button>
+
+      <nav id="siteNav" aria-label="Main navigation">
+        <ul>
+          <li><a href="#home" aria-current="page">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ========== MAIN ========== -->
+  <main id="main">
+
+    <!-- HERO -->
+    <section class="hero" id="home" aria-labelledby="hero-title" style="padding:0;">
+      <div class="hero-content">
+        <span class="eyebrow">Web Design Studio</span>
+        <h1 id="hero-title">We Build Websites That <em>Grow Your Business</em></h1>
+        <p>Fast, beautiful and accessible websites designed to turn visitors into loyal customers.</p>
+        <a class="btn" href="#contact">Get a Free Quote</a>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" aria-labelledby="about-title">
+      <div class="container">
+        <div class="section-head reveal">
+          <h2 id="about-title">About Us</h2>
+          <p>A small team with a big passion for clean design and solid code.</p>
+        </div>
+
+        <div class="about-grid">
+          <img class="reveal"
+               alt="Illustration of a browser window showing a website layout with a header, image and text blocks"
+               width="520" height="380"
+               src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 520 380'%3E%3Crect width='520' height='380' rx='18' fill='%231d4ed8'/%3E%3Crect x='40' y='40' width='440' height='300' rx='12' fill='white'/%3E%3Crect x='40' y='40' width='440' height='40' rx='12' fill='%230f172a'/%3E%3Ccircle cx='65' cy='60' r='7' fill='%23f59e0b'/%3E%3Ccircle cx='88' cy='60' r='7' fill='%2394a3b8'/%3E%3Crect x='64' y='104' width='210' height='22' rx='6' fill='%230f172a'/%3E%3Crect x='64' y='140' width='170' height='12' rx='6' fill='%2394a3b8'/%3E%3Crect x='64' y='162' width='190' height='12' rx='6' fill='%2394a3b8'/%3E%3Crect x='64' y='196' width='100' height='32' rx='16' fill='%23f59e0b'/%3E%3Crect x='300' y='104' width='156' height='124' rx='10' fill='%23dbeafe'/%3E%3Crect x='64' y='252' width='120' height='64' rx='8' fill='%23f1f5f9'/%3E%3Crect x='200' y='252' width='120' height='64' rx='8' fill='%23f1f5f9'/%3E%3Crect x='336' y='252' width='120' height='64' rx='8' fill='%23f1f5f9'/%3E%3C/svg%3E">
+
+          <div class="reveal">
+            <h3>Design that works as hard as you do</h3>
+            <p>Since 2018 we have helped local shops, clinics and start-ups build a strong online presence. Every project starts by understanding your customers and ends with a site that is quick, mobile-friendly and easy for everyone to use.</p>
+            <ul>
+              <li>Mobile-first, responsive layouts</li>
+              <li>Accessibility built in from day one</li>
+              <li>Clear communication and fair pricing</li>
+            </ul>
+            <div class="stats">
+              <div class="stat"><strong data-count="120">0</strong><span>Projects delivered</span></div>
+              <div class="stat"><strong data-count="85">0</strong><span>Happy clients</span></div>
+              <div class="stat"><strong data-count="6">0</strong><span>Years of experience</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section class="alt" id="services" aria-labelledby="services-title">
+      <div class="container">
+        <div class="section-head reveal">
+          <h2 id="services-title">Our Services</h2>
+          <p>Everything you need to launch and grow online, in one place.</p>
+        </div>
+
+        <div class="cards">
+          <article class="card reveal">
+           
+            <h3>Web Design</h3>
+            <p>Modern, brand-focused layouts that look great on phones, tablets and desktops.</p>
+            <a href="#contact">Learn more about web design</a>
+          </article>
+
+          <article class="card reveal">
+        
+            <h3>Web Development</h3>
+            <p>Clean HTML5, CSS3 and JavaScript with fast load times and reliable performance.</p>
+            <a href="#contact">Learn more about web development</a>
+          </article>
+
+          <article class="card reveal">
+
+            <p>Semantic structure and smart optimisation that help customers find you on search engines.</p>
+            <a href="#contact">Learn more about SEO and growth</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========== FOOTER ========== -->
+  <footer id="contact">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <h2>BrightPath Web Studio</h2>
+          <p>We craft fast, accessible websites for small businesses that want to grow online.</p>
+        </div>
+
+        <div>
+          <h2>Contact</h2>
+          <address style="font-style: normal;">
+            <p>Karachi, Pakistan</p>
+            <p><a href="mailto:hello@brightpath.example">hello@brightpath.example</a></p>
+            <p><a href="tel:+920000000000">+92 000 0000000</a></p>
+          </address>
+        </div>
+
+        <div>
+          <h2>Follow Us</h2>
+          <ul class="social">
+            <li><a href="https://facebook.com" target="_blank" rel="noopener" aria-label="BrightPath on Facebook">f</a></li>
+            <li><a href="https://twitter.com" target="_blank" rel="noopener" aria-label="BrightPath on X (Twitter)">X</a></li>
+            <li><a href="https://instagram.com" target="_blank" rel="noopener" aria-label="BrightPath on Instagram">in</a></li>
+            <li><a href="https://linkedin.com" target="_blank" rel="noopener" aria-label="BrightPath on LinkedIn">li</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <p class="copyright">&copy; <span id="year">2026</span> BrightPath Web Studio. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <button id="toTop" aria-label="Back to top">&uarr;</button>
+
+  <script>
+    // Mobile menu toggle
+    const toggle = document.getElementById('menuToggle');
+    const siteNav = document.getElementById('siteNav');
+    toggle.addEventListener('click', () => {
+      const open = siteNav.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', open);
+    });
+    siteNav.querySelectorAll('a').forEach(a =>
+      a.addEventListener('click', () => {
+        siteNav.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+      })
+    );
+
+    // Highlight the current section in the navigation
+    const navLinks = document.querySelectorAll('nav a');
+    const trackIds = ['home', 'about', 'services', 'contact'];
+    function updateActive() {
+      let current = 'home';
+      const y = window.scrollY + 120;
+      trackIds.forEach(id => {
+        const el = document.getElementById(id);
+        if (el && el.offsetTop <= y) current = id;
+      });
+      navLinks.forEach(a => {
+        if (a.getAttribute('href') === '#' + current) a.setAttribute('aria-current', 'page');
+        else a.removeAttribute('aria-current');
+      });
+    }
+
+    // Back-to-top button
+    const toTop = document.getElementById('toTop');
+    toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    window.addEventListener('scroll', () => {
+      updateActive();
+      toTop.classList.toggle('show', window.scrollY > 500);
+    });
+    updateActive();
+
+    // Fade-in on scroll + animated counters
+    function countUp(el) {
+      const target = +el.dataset.count;
+      let n = 0;
+      const step = Math.max(1, Math.ceil(target / 60));
+      const t = setInterval(() => {
+        n = Math.min(target, n + step);
+        el.textContent = n + (target > 10 ? '+' : '');
+        if (n >= target) clearInterval(t);
+      }, 25);
+    }
+
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          e.target.querySelectorAll('[data-count]').forEach(countUp);
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.2 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    // Footer year
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
